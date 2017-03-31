@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
+`include <SSD1306_ROM_cfg_mod.vh>
 
 // Commands for SSD1306
 `define SSD1306_SETCONTRAST				81
@@ -45,21 +45,6 @@
 `define SSD1306_EXTERNALVCC				01
 `define SSD1306_INTERNALVCC				02
 `define SSD1306_SWITCHCAPVCC			02
-
-`define BLOCK_ROM_INIT_ADDR_WIDTH	7 /* Script ROM address bus width */
-`define BLOCK_ROM_INIT_DATA_WIDTH	48 /* Script ROM data bus width */
-
-/* Create an asynchronous rom memory that contain the config script */
-module block_rom_oled_init(
-    input [`BLOCK_ROM_INIT_ADDR_WIDTH-1:0] addr,
-    output [`BLOCK_ROM_INIT_DATA_WIDTH-1:0] dout
-);
-    parameter FILENAME="oledInitRom.mem";
-    localparam LENGTH=2**`BLOCK_ROM_INIT_ADDR_WIDTH;
-    reg [`BLOCK_ROM_INIT_DATA_WIDTH-1:0] mem [LENGTH-1:0];
-    initial $readmemh(FILENAME, mem);
-assign dout = mem[addr];
-endmodule
 
 module	SSD1306(
 	input	CLK100MHZ,
@@ -97,7 +82,7 @@ begin
 		clk_div <= clk_div + 1;
 end
 
-block_rom_oled_init oled_rom_init(
+SSD1306_ROM_cfg_mod oled_rom_init(
 	.addr(state_machine_count),
 	.dout(rom_bus)
 );
@@ -117,12 +102,12 @@ spi0(
 	.prescaller(3'h2),
 	.sck(oled_sclk),
 	.mosi(oled_sdin),
-	//.miso(miso),
+	.miso(1'b1),
 	//.ss(ss),
 	.lsbfirst(1'b0),
 	.mode(2'h0),
 	//.senderr(senderr),
-	//.res_senderr(res_senderr),
+	.res_senderr(1'b0),
 	.charreceived(charreceived)
 );
 

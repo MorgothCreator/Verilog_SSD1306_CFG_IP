@@ -18,10 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`define	OSC_FREQ_HZ	100000000
-
-`define BLOCK_ROM_INIT_ADDR_WIDTH	7
-`define BLOCK_ROM_INIT_DATA_WIDTH	48
+`include <SSD1306_ROM_cfg_mod.vh>
 
 module	SSD1306_SIMULATE(
 	output	reg oled_dc,
@@ -89,7 +86,7 @@ begin
 		clk_div <= clk_div + 1;
 end
 	
-block_rom_oled_init oled_rom_init(
+SSD1306_ROM_cfg_mod oled_rom_init(
 	.addr(state_machine_count),
 	.dout(rom_bus)
 );
@@ -109,17 +106,15 @@ spi0(
 	.prescaller(3'h4),
 	.sck(oled_sclk),
 	.mosi(oled_sdin),
-	//.miso(miso),
+	.miso(1'b1),
 	//.ss(ss),
 	.lsbfirst(1'b0),
 	.mode(2'h0),
 	//.senderr(senderr),
-	//.res_senderr(res_senderr),
+	.res_senderr(1'b0),
 	.charreceived(charreceived)
 );
 		
-//`define	US_TO_CICLES(US)				((`OSC_FREQ_HZ	/	1000000)	*	US)
-	
 always @ (posedge clk_div[3])
 begin
 	if(btnc)

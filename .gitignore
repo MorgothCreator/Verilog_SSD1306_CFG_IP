@@ -55,8 +55,8 @@ Temporary Items
 *.rpt
 *.str
 *.zip
-Verilog SSD1306 cfg library.cache
-Verilog SSD1306 cfg library.hw
-Verilog SSD1306 cfg library.ip_user_files
-Verilog SSD1306 cfg library.runs
-Verilog SSD1306 cfg library.sim
+Verilog_SSD1306_CFG_IP.cache
+Verilog_SSD1306_CFG_IP.hw
+Verilog_SSD1306_CFG_IP.ip_user_files
+Verilog_SSD1306_CFG_IP.runs
+Verilog_SSD1306_CFG_IP.sim

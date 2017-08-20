@@ -178,7 +178,7 @@ begin
 							begin
 								time_count <= time_count_back;
 								if(rom_bus[47])
-									state_machine_count <= state_machine_count - rom_bus[46:44];
+									state_machine_count <= state_machine_count + ~rom_bus[46:44];
 								else
 									state_machine_count <= state_machine_count + rom_bus[46:44];
 							end
@@ -196,7 +196,7 @@ begin
 						begin
 							time_count <= time_count_back;
 							if(rom_bus[47])
-								state_machine_count <= state_machine_count - rom_bus[46:44];
+								state_machine_count <= state_machine_count + ~rom_bus[46:44];
 							else
 								state_machine_count <= state_machine_count + rom_bus[46:44];
 						end
